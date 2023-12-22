@@ -5,7 +5,7 @@ Pleae be patient with releases.
 this readme outlines the features and usages that I plan to implement as I work on this project.  
 a ❌ means a feature does not exist :(  
 a ✅ means a feature is fully working!  
-a ⚠️ means that the feature is semi-functional, but broken.
+a ⚠️ means that the feature is semi-functional, but broken.  
 a 🚧 means that a feature is development!
 # Features
 * [*Single MAC Deauth*](#Single-MAC) (❌)  
