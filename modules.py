@@ -3,6 +3,8 @@ import subprocess
 import sys
 import time
 import threading
+args=sys.argv
+args= [arg.lower() for arg in args]
 def countdown_sleep(time:int,reason:str=None):
     for i in range(time):
         print(f"{reason if reason else 'continue'} in {time-i}")
@@ -47,3 +49,4 @@ def get_interfaces():
     return wifi_interfaces
 def inlineraise(message):
     raise Exception(error(message))
+ir=inlineraise
