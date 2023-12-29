@@ -8,12 +8,12 @@ a ✅ means a feature is fully working!
 a ⚠️ means that the feature is semi-functional, but broken.  
 a 🚧 means that a feature is development!
 # Features
-* [*Single MAC Deauth*](#Single-MAC) (🚧)  
-* [*Multi-MAC Deauth*](#Multi-MAC) (🚧)  
-* [*MAC Scanning*](#Scanning) (🚧)  
-* [*Target Specific Deauth*](#Targeting) (🚧)  
-* [*Command Line Arguments*](#Args) (🚧)  
-* [*GUI*](#GUI) (❌)  
+* [*Single MAC Deauth*](#single-mac-deauth-) (🚧)  
+* [*Multi-MAC Deauth*](#multi-mac-deauth-) (🚧)  
+* [*MAC Scanning*](#scanning-) (🚧)  
+* [*Target Specific Deauth*](#targeting-) (🚧)  
+* [*Command Line Arguments*](#args-) (🚧)  
+* [*GUI*](#gui-) (❌)  
 ## Single MAC Deauth (🚧)
 Broadcast a deauthentication code to a single access point.  
 
