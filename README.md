@@ -11,26 +11,25 @@ a 🚧 means that a feature is development!
 * [*Single MAC Deauth*](#single-mac-deauth-) (🚧)  
 * [*Multi-MAC Deauth*](#multi-mac-deauth-) (🚧)  
 * [*MAC Scanning*](#scanning-) (🚧)  
-* [*Target Specific Deauth*](#targeting-) (🚧)  
+* [*Target Specific Deauth*](#targeting-) (❌)  
 * [*Command Line Arguments*](#args-) (🚧)  
 * [*GUI*](#gui-) (❌)  
 ## Single MAC Deauth (🚧)
 Broadcast a deauthentication code to a single access point.  
-
 ## Multi-MAC Deauth (🚧)
 ## Scanning (🚧)
 You can use this tool to scan for access points!  
 To do this, all you need to do is answer "Yes" to the question asking about MAC scanning; or you can pass the -s argument from the command line!  
 The tool used for scanning 
-## Targeting (🚧)
+## Targeting (❌)
 ## Args (🚧)
 ***ALL COMMAND-LINE ARGUMENTS ARE FORCED LOWERCASE (i.e. -s is the same as -S)***  
-* -i or --interface  
-* -s or --scan  
-* -b or --bssid  
-* -c or --channel  
-* -t or --target  
-* -f or --file  
+* -i or --interface (✅)  
+* -s or --scan (🚧)  
+* -b or --bssid (❌)  
+* -c or --channel (❌)  
+* -t or --target (❌)  
+* -f or --file (❌)  
 There are three parts to this argument.  
   1. This argument can be passed multiple times. (*i.e. -f b bssids.txt*)
   2. The first section after the flag stated the information stored inside the file  
