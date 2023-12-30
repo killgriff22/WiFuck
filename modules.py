@@ -1,14 +1,14 @@
 import os
 import subprocess
 import sys
-import time
+from time import sleep
 import threading
 args=sys.argv
 args= [arg.lower() for arg in args]
 def countdown_sleep(time:int,reason:str=None):
     for i in range(time):
         print(f"{reason if reason else 'continue'} in {time-i}")
-        time.sleep(1)
+        sleep(1)
 class Fore:
     BLACK = '\033[30m'
     RED = '\033[31m'

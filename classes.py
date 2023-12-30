@@ -12,8 +12,10 @@ class Interface:
                 raise Exception(error(f"{self.adapter} {f'on channel {channel if channel and not channel==self.channel else self.channel} ' if channel or self.channel else ''}could not be started! \n{e}"))
             if f"monitor mode vif enabled" in out:
                 success(f"Started {self.adapter}{f' on channel {channel if channel and not channel==self.channel else self.channel} ' if channel or self.channel else ''}")
-            self.adapter = self.adapter + "mon" if "mon" not in self.adapter else self.adapter
-            self.channel=channel if not channel == self.channel else self.channel
+                self.adapter = self.adapter + "mon" if "mon" not in self.adapter else self.adapter
+                self.channel=channel if not channel == self.channel else self.channel
+            else:
+                raise Exception(error(f"Failed to start {self.adapter}{f' on channel {channel if channel and not channel==self.channel else self.channel} ' if channel or self.channel else ''}"))
         elif mode == "managed":
             if "mon" in self.adapter:
                 info(f"Stopping {self.adapter} Monitor mode")
@@ -27,6 +29,7 @@ class Interface:
     def stop(self):
         self.start(mode="managed")
     def scan_for_MACs(self) -> list:
+        self.start()
         command_args=""
         if "-e" in args:
             command_args+=f" --essid {args[args.index('-e')+1]}"
@@ -50,14 +53,12 @@ class Interface:
                 if line == "":
                     whitespace_lines.append(i)
             content = content[2:whitespace_lines[1]]
-            list_of_BSSIDs=[]
+            Networks=[]
             for line in content:
-                if "<length" in line:
-                    continue
                 line=line.split(",")
                 BSSID,FTS,LTS,channel,Speed,Privacy,Cipher,Authentication,Power,num_beacons,IV,IP,IDlen,name,key=line
-                list_of_BSSIDs.append(f"{BSSID},{channel.strip()},{name}")
-            return list_of_BSSIDs
+                Networks.append(WifiNetwork(BSSID,channel,name.strip()))
+            return Networks
 class WifiNetwork:
     def __init__(self,MAC:str,channel:str or str(int),name:str) -> None:
         self.MAC = MAC
