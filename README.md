@@ -1,6 +1,6 @@
 # WiFuck (🚧)
 A more robust version of [wifidos](https://github.com/killgriff22/wifidos)
-## This is in active development!
+## This is not in development (05/22/2024)!
 Pleae be patient with releases.  
 this readme outlines the features and usages that I plan to implement as I work on this project.  
 a ❌ means a feature does not exist :(  
